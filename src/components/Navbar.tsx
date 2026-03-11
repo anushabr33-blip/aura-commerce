@@ -1,9 +1,21 @@
 import { useState } from "react";
-import { ShoppingBag, Search, Menu, X, User } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ShoppingBag, Search, Menu, X, User, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleUserClick = () => {
+    if (user) {
+      signOut();
+    } else {
+      navigate("/auth");
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
@@ -19,7 +31,7 @@ const Navbar = () => {
           {["New Arrivals", "Collections", "Moods"].map((item) => (
             <a
               key={item}
-              href="#"
+              href={item === "Moods" ? "#mood" : "#"}
               className="text-sm font-body tracking-wider text-muted-foreground hover:text-primary transition-colors uppercase"
             >
               {item}
@@ -27,18 +39,22 @@ const Navbar = () => {
           ))}
         </div>
 
-        <a href="/" className="absolute left-1/2 -translate-x-1/2">
+        <Link to="/" className="absolute left-1/2 -translate-x-1/2">
           <h1 className="text-2xl md:text-3xl font-display font-bold tracking-wide text-gradient-gold">
             AURÈLE
           </h1>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-5">
           <button className="text-muted-foreground hover:text-primary transition-colors">
             <Search size={20} />
           </button>
-          <button className="text-muted-foreground hover:text-primary transition-colors">
-            <User size={20} />
+          <button
+            onClick={handleUserClick}
+            className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+            title={user ? "Sign out" : "Sign in"}
+          >
+            {user ? <LogOut size={20} /> : <User size={20} />}
           </button>
           <button className="relative text-muted-foreground hover:text-primary transition-colors">
             <ShoppingBag size={20} />
@@ -67,6 +83,15 @@ const Navbar = () => {
                   {item}
                 </a>
               ))}
+              {!user && (
+                <Link
+                  to="/auth"
+                  className="text-sm font-body tracking-wider text-primary uppercase"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
