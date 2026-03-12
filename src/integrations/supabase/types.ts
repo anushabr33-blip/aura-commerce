@@ -14,6 +14,112 @@ export type Database = {
   }
   public: {
     Tables: {
+      group_deal_participants: {
+        Row: {
+          deal_id: string
+          id: string
+          joined_at: string
+          user_id: string
+        }
+        Insert: {
+          deal_id: string
+          id?: string
+          joined_at?: string
+          user_id: string
+        }
+        Update: {
+          deal_id?: string
+          id?: string
+          joined_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_deal_participants_deal_id_fkey"
+            columns: ["deal_id"]
+            isOneToOne: false
+            referencedRelation: "group_deals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      group_deals: {
+        Row: {
+          created_at: string
+          created_by: string
+          discount_percent: number
+          expires_at: string
+          id: string
+          invite_code: string
+          is_active: boolean | null
+          product_id: string
+          target_participants: number
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          discount_percent?: number
+          expires_at: string
+          id?: string
+          invite_code: string
+          is_active?: boolean | null
+          product_id: string
+          target_participants?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          discount_percent?: number
+          expires_at?: string
+          id?: string
+          invite_code?: string
+          is_active?: boolean | null
+          product_id?: string
+          target_participants?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_deals_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          image_url: string | null
+          mood: string | null
+          name: string
+          price: number
+          specs: Json | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          mood?: string | null
+          name: string
+          price: number
+          specs?: Json | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          mood?: string | null
+          name?: string
+          price?: number
+          specs?: Json | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -41,12 +147,190 @@ export type Database = {
         }
         Relationships: []
       }
+      session_cart_items: {
+        Row: {
+          added_by: string
+          created_at: string
+          id: string
+          product_id: string
+          quantity: number | null
+          session_id: string
+        }
+        Insert: {
+          added_by: string
+          created_at?: string
+          id?: string
+          product_id: string
+          quantity?: number | null
+          session_id: string
+        }
+        Update: {
+          added_by?: string
+          created_at?: string
+          id?: string
+          product_id?: string
+          quantity?: number | null
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_cart_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_cart_items_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_participants: {
+        Row: {
+          display_name: string | null
+          id: string
+          joined_at: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          display_name?: string | null
+          id?: string
+          joined_at?: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          display_name?: string | null
+          id?: string
+          joined_at?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_participants_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_votes: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          session_id: string
+          user_id: string
+          vote: boolean
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          session_id: string
+          user_id: string
+          vote: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          session_id?: string
+          user_id?: string
+          vote?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_votes_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_votes_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "shopping_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shopping_sessions: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          invite_code: string
+          is_active: boolean | null
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          invite_code: string
+          is_active?: boolean | null
+          name: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          invite_code?: string
+          is_active?: boolean | null
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_session_participant: {
+        Args: { _session_id: string; _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

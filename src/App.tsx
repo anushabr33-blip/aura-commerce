@@ -8,6 +8,9 @@ import Index from "./pages/Index.tsx";
 import AuthPage from "./pages/AuthPage.tsx";
 import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
+import SocialShopping from "./pages/SocialShopping.tsx";
+import CompareProducts from "./pages/CompareProducts.tsx";
+import GroupDeals from "./pages/GroupDeals.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -24,6 +27,9 @@ const App = () => (
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/social-shopping" element={<SocialShopping />} />
+            <Route path="/compare" element={<CompareProducts />} />
+            <Route path="/group-deals" element={<GroupDeals />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

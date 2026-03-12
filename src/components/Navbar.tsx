@@ -28,14 +28,18 @@ const Navbar = () => {
         </button>
 
         <div className="hidden md:flex items-center gap-8">
-          {["New Arrivals", "Collections", "Moods"].map((item) => (
-            <a
-              key={item}
-              href={item === "Moods" ? "#mood" : "#"}
+          {[
+            { label: "Shop Together", href: "/social-shopping" },
+            { label: "Compare", href: "/compare" },
+            { label: "Group Deals", href: "/group-deals" },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              to={item.href}
               className="text-sm font-body tracking-wider text-muted-foreground hover:text-primary transition-colors uppercase"
             >
-              {item}
-            </a>
+              {item.label}
+            </Link>
           ))}
         </div>
 
@@ -74,14 +78,19 @@ const Navbar = () => {
             className="md:hidden overflow-hidden bg-card border-t border-border"
           >
             <div className="px-6 py-6 flex flex-col gap-4">
-              {["New Arrivals", "Collections", "Moods", "About"].map((item) => (
-                <a
-                  key={item}
-                  href="#"
+              {[
+                { label: "Shop Together", href: "/social-shopping" },
+                { label: "Compare", href: "/compare" },
+                { label: "Group Deals", href: "/group-deals" },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.href}
                   className="text-sm font-body tracking-wider text-muted-foreground hover:text-primary transition-colors uppercase"
+                  onClick={() => setIsOpen(false)}
                 >
-                  {item}
-                </a>
+                  {item.label}
+                </Link>
               ))}
               {!user && (
                 <Link
