@@ -236,7 +236,7 @@ const GroupDeals = () => {
                           </div>
 
                           {isUnlocked && (
-                            <div className="flex items-center gap-2 text-sm font-body text-green-400 mb-3">
+                            <div className="flex items-center gap-2 text-sm font-body text-success mb-3">
                               <Check className="w-4 h-4" /> Deal unlocked! Group price active.
                             </div>
                           )}

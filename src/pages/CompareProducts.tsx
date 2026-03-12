@@ -109,7 +109,7 @@ const CompareProducts = () => {
                           const isHighest = product.price === Math.max(...prices);
                           return (
                             <td key={product.id} className={`p-4 text-center font-body font-semibold text-sm ${
-                              prices.length > 1 && isLowest ? "text-green-400" : prices.length > 1 && isHighest ? "text-destructive" : ""
+                              prices.length > 1 && isLowest ? "text-success" : prices.length > 1 && isHighest ? "text-destructive" : ""
                             }`}>
                               ${product.price.toLocaleString()}
                               {prices.length > 1 && isLowest && <span className="block text-xs mt-0.5">Best Price</span>}
