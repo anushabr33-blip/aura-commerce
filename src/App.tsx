@@ -27,6 +27,9 @@ const App = () => (
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/social-shopping" element={<SocialShopping />} />
+            <Route path="/compare" element={<CompareProducts />} />
+            <Route path="/group-deals" element={<GroupDeals />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
