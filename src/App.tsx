@@ -8,6 +8,9 @@ import Index from "./pages/Index.tsx";
 import AuthPage from "./pages/AuthPage.tsx";
 import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
+import SocialShopping from "./pages/SocialShopping.tsx";
+import CompareProducts from "./pages/CompareProducts.tsx";
+import GroupDeals from "./pages/GroupDeals.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
