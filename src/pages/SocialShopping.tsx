@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { getProductImage } from "@/lib/products";
 import Navbar from "@/components/Navbar";
+import ParticipantsList from "@/components/social-shopping/ParticipantsList";
 
 const SocialShopping = () => {
   const { user } = useAuth();
@@ -250,7 +251,10 @@ const SocialShopping = () => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Participants Bar */}
+        <ParticipantsList participants={participants} currentUserId={user?.id} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
           {/* Products Column */}
           <div className="lg:col-span-1 space-y-4">
             <h2 className="font-display font-semibold text-lg flex items-center gap-2">
