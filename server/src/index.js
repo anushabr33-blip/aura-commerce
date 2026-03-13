@@ -29,6 +29,10 @@ app.use((req, _res, next) => {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.send("Aura Commerce Backend Running 🚀");
+});
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
