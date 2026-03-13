@@ -1,22 +1,24 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShoppingBag, Heart } from "lucide-react";
-import product1 from "@/assets/product-1.jpg";
-import product2 from "@/assets/product-2.jpg";
-import product3 from "@/assets/product-3.jpg";
-import product4 from "@/assets/product-4.jpg";
-import product5 from "@/assets/product-5.jpg";
-import product6 from "@/assets/product-6.jpg";
-
-const products = [
-  { id: 1, name: "Noir Leather Tote", price: 890, category: "Bags", image: product1, mood: "bold" },
-  { id: 2, name: "Chronograph Gold", price: 2450, category: "Watches", image: product2, mood: "minimal" },
-  { id: 3, name: "Aviator Shades", price: 340, category: "Eyewear", image: product3, mood: "adventurous" },
-  { id: 4, name: "Elysian Parfum", price: 275, category: "Fragrance", image: product4, mood: "cozy" },
-  { id: 5, name: "Heritage Wallet", price: 195, category: "Accessories", image: product5, mood: "minimal" },
-  { id: 6, name: "Silk Ombré Scarf", price: 420, category: "Accessories", image: product6, mood: "cozy" },
-];
+import { supabase } from "@/integrations/supabase/client";
+import { getProductImage } from "@/lib/products";
 
 const ProductGrid = () => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data } = await supabase.from("products").select("*").order("created_at");
+      if (data) setProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
+  const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
+  const filtered = selectedCategory === "All" ? products : products.filter((p) => p.category === selectedCategory);
+
   return (
     <section id="products" className="py-24 bg-background">
       <div className="container mx-auto px-6">
@@ -34,21 +36,39 @@ const ProductGrid = () => {
           </h2>
         </motion.div>
 
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-5 py-2 rounded-full text-sm font-body tracking-wider uppercase transition-all duration-300 ${
+                selectedCategory === cat
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {products.map((product, i) => (
+          {filtered.map((product, i) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.05 }}
               className="group cursor-pointer"
             >
               <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-card mb-4">
                 <img
-                  src={product.image}
+                  src={getProductImage(product.image_url)}
                   alt={product.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-background/0 group-hover:bg-background/30 transition-colors duration-300" />
 
