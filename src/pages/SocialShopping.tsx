@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { getProductImage } from "@/lib/products";
 import Navbar from "@/components/Navbar";
+import ParticipantsList from "@/components/social-shopping/ParticipantsList";
 
 const SocialShopping = () => {
   const { user } = useAuth();
