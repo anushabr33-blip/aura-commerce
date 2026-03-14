@@ -15,12 +15,12 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "https://aura-commerce-8j76.onrender.com",
     methods: ["GET", "POST"],
   },
 });
 
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
+app.use(cors({ origin: process.env.CLIENT_URL || "https://aura-commerce-8j76.onrender.com" }));
 app.use(express.json());
 
 // Attach io to req for use in routes
